@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>{{ heading_1 }}</h1>
+  {% for onegai in all_onegai %}
+    <p>{{onegai.title}}：{{onegai.body}}（{{onegai.date}}）</p>
+  {% endfor %}
+  <form action="/add" method="post">
+    <input type="text" name="title" placeholder="title">
+    <input type="text" name="body" placeholder="body">
+    <input type="submit" value="Add">
+  </form>
+
+  <p id="log"></p>
+  <button id="s_button">LOG</button>
+
+  <p id="logTitle"></p>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $(function() {
+          setInterval(function(){
+            $.ajax({
+              url: '{{ url_for('log') }}',
+              contentType: 'application/json;charset=UTF-8',
+              type: 'POST'
+            }).done(function(data){
+              console.log(data);
+              document.getElementById("logTitle").innerText = data.value;
+            }).fail(function(){
+              console.log('fail');
+            });
+          }, 1000);
+        });
+    </script>
+{% endblock scripts %}
