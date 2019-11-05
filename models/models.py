@@ -3,17 +3,15 @@ from models.database import Base
 from datetime import datetime
 
 
-class OnegaiContent(Base):
-    __tablename__ = 'onegaicontents'
+class LogContent(Base):
+    __tablename__ = 'logcontents'
     id = Column(Integer, primary_key=True)
-    title = Column(String(128), unique=True)
-    body = Column(Text)
+    log = Column(Text)
     date = Column(DateTime, default=datetime.now())
 
-    def __init__(self, title=None, body=None, date=None):
-        self.title = title
-        self.body = body
+    def __init__(self, log=None, date=None):
+        self.log = log
         self.date = date
 
     def __repr__(self):
-        return '<Title %r>' % (self.title)
+        return '<Log %r>' % (self.log)
